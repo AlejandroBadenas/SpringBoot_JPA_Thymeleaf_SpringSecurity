@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Películas</title>
+</head>
+<body class="bg-light">
+
+<div>
+  <h1>Películas</h1>
+
+  <div th:if="${#lists.isEmpty(listaPeliculas)}">
+    <div>No hay películas disponibles.</div>
+  </div>
+
+  <table th:if="${not #lists.isEmpty(listaPeliculas)}">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Título</th>
+      <th>Director</th>
+      <th>Año</th>
+      <th>Género</th>
+      <th>Valoración</th>
+      <th>Usuario</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pelicula : ${listaPeliculas}">
+      <td th:text="${pelicula.id_pelicula}">1</td>
+      <td th:text="${pelicula.titulo}">Título</td>
+      <td th:text="${pelicula.director}">Director</td>
+      <td th:text="${pelicula.año}">2023</td>
+      <td th:text="${pelicula.genero}">Acción</td>
+      <td th:text="${pelicula.valoracion}">5</td>
+      <td th:text="${pelicula.usuario != null ? pelicula.usuario.nombre : 'N/A'}">Usuario</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

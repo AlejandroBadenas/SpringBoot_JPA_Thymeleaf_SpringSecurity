@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Películas | CinePlus</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+        padding-top: 80px;
+        background-color: #f9f9f9;
+        font-family: 'Segoe UI', sans-serif;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .navbar {
+        background-color: #1f2d3d !important;
+    }
+
+    .navbar .nav-link {
+        color: #f0f0f0 !important;
+    }
+
+    .navbar .nav-link:hover {
+        color: #ffc107 !important;
+    }
+
+    .footer {
+        background-color: #1f2d3d;
+        color: white;
+        padding: 20px 0;
+        margin-top: auto;
+        text-align: center;
+    }
+
+    .footer .text-warning {
+        color: #ffc107;
+    }
+
+    .btn-warning, .btn-outline-primary, .btn-danger {
+        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+    }
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+        border-color: #e0a800;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm fixed-top">
+  <div class="container">
+    <img src="/logo.png" alt="Logo CinePlus" width="70px"/>
+    <a class="navbar-brand fw-bold text-warning" href="/usuario/principal">CinePlus</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="/pelicula/mispeliculas"><i class="fas fa-film me-1"></i>Mis Películas</a></li>
+        <li class="nav-item"><a class="nav-link" href="/favoritos"><i class="fas fa-star me-1"></i>Favoritos</a></li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link text-info" href="#"><i class="fas fa-user-circle me-1"></i><span th:text="${nombreUsuario}">Usuario</span></a></li>
+        <li class="nav-item"><a class="nav-link text-danger" href="/usuario/logout"><i class="fas fa-sign-out-alt me-1"></i>Salir</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Contenido principal -->
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="text-dark">Películas Registradas</h3>
+    <a href="/pelicula/agregarPeliculas" class="btn btn-warning"><i class="fas fa-plus me-1"></i>Agregar Película</a>
+  </div>
+
+  <div th:if="${#lists.isEmpty(listaPeliculas)}" class="alert alert-info text-center">
+    No hay películas registradas.
+  </div>
+
+  <div th:if="${not #lists.isEmpty(listaPeliculas)}">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped align-middle">
+        <thead class="table-dark text-center">
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Director</th>
+          <th>Año</th>
+          <th>Género</th>
+          <th>Valoración</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pelicula : ${listaPeliculas}">
+          <td th:text="${pelicula.id_pelicula}">1</td>
+          <td th:text="${pelicula.titulo}">Inception</td>
+          <td th:text="${pelicula.director}">Christopher Nolan</td>
+          <td th:text="${pelicula.año}">2010</td>
+          <td th:text="${pelicula.genero}">Ciencia Ficción</td>
+          <td th:text="${pelicula.valoracion}">9</td>
+          <td class="text-center">
+            <a th:href="@{/pelicula/editarPeliculas/{id}(id=${pelicula.id_pelicula})}" class="btn btn-warning btn-sm me-1">
+              <i class="fas fa-edit"></i> Editar
+            </a>
+            <a th:href="@{/pelicula/eliminarPeliculas/{id}(id=${pelicula.id_pelicula})}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta película?');">
+              <i class="fas fa-trash-alt"></i> Eliminar
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>&copy; 2025 CinePlus. Todos los derechos reservados.</p>
+  <p>Desarrollado por <strong class="text-warning">Alejandro Badenas</strong> y <strong class="text-warning">David Figuer</strong></p>
+  <p><i class="fas fa-university me-1"></i>Proyecto académico para <strong>La Salle</strong></p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

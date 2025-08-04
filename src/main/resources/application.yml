@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    username: root
+    password: e7786frn
+    url: jdbc:mysql://localhost:3306/SB_Catalogo_Peliculas
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8081
+
+base:
+  url: "http://localhost:8081"
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
